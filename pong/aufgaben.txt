@@ -1,0 +1,59 @@
+1. Schaue dir an, wie Pong funktioniert (z.B. auf youtube)
+
+2. Einzelspieler Pong
+    Du schreibst zuerst ein Pong für einen einzelnen Spieler.
+    Das Spielfeld soll so aussehen:
+
+    #################       # = Bande
+                    #       | = Schläger
+            *       #       * = Ball
+    |               #
+                    #
+                    #
+    #################
+
+2.1 Spielfeld
+    - Erstelle eine neue Datei "court.lua" im Ordner pong.
+    - Füge die neue Datei in pong.p8 als #include hinzu.
+    - Schreibe eine Funktion create_court:
+        - Die Funktion erzeugt eine neue Tabelle und gibt sie zurück.
+        - Welche Felder soll die neue Tabelle enthalten, damit die Umrandung
+          gezeichnet werden kann?
+        - Wo musst Du die Funktion create_court aufrufen, und was machst Du mit 
+            der Tabelle, die sie Dir zurückgibt?
+    - Schreibe eine Funktion draw_court:
+        - Die Funktion bekommt eine court Tabelle und soll die Spielfeld-
+          umrandung mit Grafikfunktionen von pico-8 zeichnen.
+        - Wo musst Du die Funktion aufrufen?
+
+2.2 Schläger
+    - Erstelle eine neue Datei "paddle.lua" im Ordner pong.
+    - Füge die neue Datei in pong.p8 als #include hinzu.
+    - Schreibe eine Funktion create_paddle:
+        - Die Funktion erzeugt eine neue Tabelle und gibt sie zurück.
+        - Welche Felder soll die neue Tabelle enthalten, damit der Schläger
+          gezeichnet werden kann?
+        - Wo musst Du die Funktion create_court aufrufen, und was machst Du mit 
+          der Tabelle, die sie Dir zurückgibt?
+        - Der Schläger soll am linken Rand des Spielfelds erscheinen und
+          dort genau in der Mitte erscheinen. 
+    - Schreibe eine Funktion draw_paddle:
+        - Die Funktion bekommt eine paddle Tabelle und soll den Schläger
+          mit Grafikfunktionen von pico-8 zeichnen.
+        - Wo musst Du die Funktion aufrufen?
+        - Male Dir auf einen Zettel auf, wo der Schläger genau gemalt wird,
+          wenn Du eine Position (x,y) vorgibst.
+          - Dazu musst Du verstehen, wo der "lokale Ursprung" des Schlägers ist.
+          - Überlege Dir genau, wie Du vom "lokalen Ursprung" ausgehend die
+            Koordinaten der Geometrie des Schlägers ausrechnen kannst, damit
+            er am Ende an der richtigen Position im Spielfeld erscheint.
+          - Schreibe eine Funktion rectfill_centered, die ein Rechteck mit Mittelpunkt,
+            Breite und Höhe füllt.
+    - Schreibe eine Funktion update_paddle
+        - Die Funktion bekommt eine paddle Tabelle und soll die Position des
+          Schlägers mit den Eingaben des Spielers bewegen.
+        - Definiere hierzu eine Geschwindigkeit "speed", die verwendet wird,
+          um den Schläger beim Drücken eines Knopfes zu verschieben.
+        - Wo musst Du "speed" speichern?
+        - Der Schäger soll jeweils an den Rändern des Spielfeldes stehenbleiben.
+
