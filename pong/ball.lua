@@ -24,6 +24,13 @@ function update_ball(ball)
     ball.x = ball.x + ball.vx
     ball.y = ball.y + ball.vy
     ball.color = rnd(15) + 1
+    if ball.x >= court.w - court.t or ball.x <= 0 then 
+        ball.vx = -ball.vx 
+    end
+
+    if ball.y >= court.h - court.t or ball.y <= 0 + court.t then 
+        ball.vy = -ball.vy 
+    end
 end
 
 function draw_ball(ball)
