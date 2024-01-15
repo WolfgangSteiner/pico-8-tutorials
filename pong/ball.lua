@@ -6,7 +6,7 @@ function create_ball()
     ball.y = 64
     ball.vx = random_speed(1)
     ball.vy = random_speed(1)
-    ball.acc = 1.1
+    ball.acc = 1.025
     return ball
 end
 
@@ -39,12 +39,21 @@ function update_ball(ball,paddle,court)
         ball.vy = -ball.vy * ball.acc
         sfx(1)
     end
+    if ball.x - ball.d\2 <= 0 then 
+        ball.x = 64 
+        ball.y = 64
+        ball.vx = random_speed(1)
+        ball.vy = random_speed(1)
+        sfx(3)
+    end
 end
 
 function paddle_hits_ball(paddle, ball)
     local y1 = paddle.y - paddle.h\2
     local y2 = paddle.y + paddle.h\2
-    if ball.x <= paddle.x and ball.y >= y1 and ball.y <= y2 then 
+    local d1 = paddle.w\2
+    local d2 = ball.d\2
+    if ball.x - d2 <= paddle.x + d1 and ball.y >= y1 - d2 and ball.y <= y2 + d2 then 
         return true
     end
     return false 
