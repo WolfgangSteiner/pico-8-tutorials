@@ -7,7 +7,7 @@ end
 
 function _update()
     update_paddle(paddle, court)
-    update_ball(ball)
+    update_ball(ball,paddle,court)
     
 end
 
