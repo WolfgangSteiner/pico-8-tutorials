@@ -30,6 +30,7 @@ function update_ball(ball,paddle,court)
         ball.vx = -ball.vx * ball.acc
         if paddle_was_hit then
             sfx(2)
+            state.score = state.score + 1
         else 
             sfx(1)
         end
@@ -39,12 +40,14 @@ function update_ball(ball,paddle,court)
         ball.vy = -ball.vy * ball.acc
         sfx(1)
     end
-    if ball.x - ball.d\2 <= 0 then 
+    if ball.x  <= 0 then 
         ball.x = 64 
         ball.y = 64
         ball.vx = random_speed(1)
         ball.vy = random_speed(1)
         sfx(3)
+        state.lifes = state.lifes - 1
+        
     end
 end
 
