@@ -3,6 +3,7 @@ function create_game_state()
     state.lifes = 3
     state.score = 0
     state.running = true
+    state.boss_fight = false
     return state 
 end
  function draw_game_state(state)
