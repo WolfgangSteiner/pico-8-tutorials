@@ -2,32 +2,26 @@ function create_ball()
     local ball = {}
     ball.color = 7 --rnd(15) + 1
     ball.d = 3
-    ball.x = 64
-    ball.y = 64
-    ball.vx = random_speed(1)
-    ball.vy = random_speed(1)
+    ball.p = vec2(64,64)
+    ball.v_start = 3
+    ball.v = random_speed(ball.v_start)
+    
     ball.acc = 1.025
+    ball.draw = draw_ball
+    ball.update = update_ball
     return ball
 end
 
 function random_speed(vmax)
-    local v = rnd(vmax) + 1
-    local sign = rnd(1)
-    if sign < 0.5 then 
-        sign = -1
-    else 
-        sign = 1
-    end
-    return sign * v   
+    return vec2_mul(vec2_random_direction(),vmax)
 end
 
-function update_ball(ball,paddle,court)
-    ball.x = ball.x + ball.vx
-    ball.y = ball.y + ball.vy
+function update_ball(ball)
+    ball.p = vec2_add(ball.p,ball.v)
     -- ball.color = rnd(15) + 1
     local paddle_was_hit = paddle_hits_ball(paddle,ball)
-    if ball.x >= court.w - court.t or paddle_was_hit then 
-        ball.vx = -ball.vx * ball.acc
+    if ball.p.x >= court.w - court.t or paddle_was_hit then 
+        ball.v.x = -ball.v.x * ball.acc
         if paddle_was_hit then
             sfx(2)
             state.score = state.score + 1
@@ -36,15 +30,13 @@ function update_ball(ball,paddle,court)
         end
     end
 
-    if ball.y >= court.h - court.t or ball.y <= 0 + court.t then 
-        ball.vy = -ball.vy * ball.acc
+    if ball.p.y >= court.h - court.t or ball.p.y <= 0 + court.t then 
+        ball.v.y = -ball.v.y * ball.acc
         sfx(1)
     end
-    if ball.x  <= 0 then 
-        ball.x = 64 
-        ball.y = 64
-        ball.vx = random_speed(1)
-        ball.vy = random_speed(1)
+    if ball.p.x  <= 0 then 
+        ball.p = vec2(64,64) 
+        ball.v = random_speed(ball.v_start)
         sfx(3)
         state.lifes = state.lifes - 1
         
@@ -52,11 +44,11 @@ function update_ball(ball,paddle,court)
 end
 
 function paddle_hits_ball(paddle, ball)
-    local y1 = paddle.y - paddle.h\2
-    local y2 = paddle.y + paddle.h\2
+    local y1 = paddle.p.y - paddle.h\2
+    local y2 = paddle.p.y + paddle.h\2
     local d1 = paddle.w\2
     local d2 = ball.d\2
-    if ball.x - d2 <= paddle.x + d1 and ball.y >= y1 - d2 and ball.y <= y2 + d2 then 
+    if ball.p.x - d2 <= paddle.p.x + d1 and ball.p.y >= y1 - d2 and ball.p.y <= y2 + d2 then 
         return true
     end
     return false 
@@ -64,5 +56,5 @@ end
 
 
 function draw_ball(ball)
-    rectfill_centered(ball.x,ball.y,ball.d, ball.d, ball.color)
+    rectfill_centered(ball.p.x,ball.p.y,ball.d, ball.d, ball.color)
 end

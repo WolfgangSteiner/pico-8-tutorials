@@ -4,6 +4,8 @@ function create_court()
     court.w = 128
     court.h = 128
     court.t = 2
+    court.draw = draw_court
+    court.update = nil
     return court
 end 
 

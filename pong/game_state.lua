@@ -10,7 +10,7 @@ end
     score = ""..state.score * 100
     score_len = #score
     print(score, 124 - score_len * 4, 5, 7)
-    local x = 30
+    local x = 5
     for i = 1, state.lifes do
         spr(1,x,5)
         x = x + 6
@@ -18,6 +18,10 @@ end
     if state.running == false then
         print("GAME OVER", 32, 62)
     end
+    if state.boss_fight == true then
+        --print("boss life" ,35,5)
+        spr(16,35,4)
+    end      
  end
 
  function update_game_state()
