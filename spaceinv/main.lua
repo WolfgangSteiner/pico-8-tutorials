@@ -1,41 +1,25 @@
 function _init()
-  cutscene_1_active = true
-  if cutscene_1_active == false then
-    counter = 0;
-    player = create_player()
-    entities = {create_starfield(),player,shot,}
-    sfx(0)
-  else 
-    cutscene_1 = create_cutscene_1()
-  end
+  intro = create_cutscene_1()
+  counter = 0;
+  player = create_player()
+  level = scene_new()
+  scene_add_entity(level, create_starfield())
+  scene_add_entity(level, player)
+  --sfx(0)
+  current_scene = intro
 end
 
 function _update()
-  --counter += 0.01
-  if cutscene_1_active == true then
-    update_cutscene_1(cutscene_1)
-  else
-  for e in all (entities) do
-    if e.update then 
-      e.update(e)
-      end
-    end
-  end
+  current_scene.update(current_scene)
 end
 
 function _draw()
     cls()
-    if cutscene_1_active == true then 
-      draw_cutscene_1(cutscene_1)
-    else
-    for e in all (entities) do
-        if e.draw then
-            e.draw(e)
-          end
-        end
-    end
+    current_scene.draw(current_scene)
 end
 
+
+--[[
 function draw_intro()
   local c = (counter * 20) % 14 + 2
   print("!!WELCOME!!", 40, 0, c)
@@ -53,3 +37,4 @@ function draw_intro()
       c = (c + 1) % 14
   end
 end
+--]]
