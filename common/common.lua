@@ -1,11 +1,14 @@
+-------------------------------------------------------------------------------
 -- misc functions
-
+-------------------------------------------------------------------------------
 function random(a,b)
     return rnd(b-a) + a
 end
 
--- 2d vector
 
+-------------------------------------------------------------------------------
+-- vec2
+-------------------------------------------------------------------------------
 function vec2(x,y)
     return {x=x,y=y}
 end
@@ -34,7 +37,9 @@ function vec2_random_direction()
 end
 
 
+-------------------------------------------------------------------------------
 -- entity
+-------------------------------------------------------------------------------
 function entity_new()
     return {
         p=vec2(0,0),
@@ -52,7 +57,10 @@ end
 function entity_draw(e)
 end
 
+
+-------------------------------------------------------------------------------
 -- sprite
+-------------------------------------------------------------------------------
 function sprite_new(pos, cells)
     local s = entity_new()
     s.p = pos
@@ -91,7 +99,10 @@ function sprite_draw(s)
     spr(s.cells[s.current_cell_idx], s.p.x, s.p.y)
 end
 
+
+-------------------------------------------------------------------------------
 -- scene
+-------------------------------------------------------------------------------
 function scene_new()
     return {
         entities = {},
@@ -116,6 +127,37 @@ end
 function scene_draw(s)
     for e in all(s.entities) do
         e.draw(e)
+    end
+end
+
+
+-------------------------------------------------------------------------------
+-- text scroller
+-------------------------------------------------------------------------------
+
+function text_scroller_init(pos, text)
+    local ts = entity_new()
+    ts.p = pos
+    ts.v = vec2(-1.5, 0)
+    ts.has_ended = false
+    ts.stop_at_right_edge = false
+    ts.text = text
+    ts.draw = function(ts)
+        print(ts.text, ts.p.x, ts.p.y, 2)
+    end
+    ts.update = text_scroller_update
+    return ts
+end
+
+function text_scroller_update(ts)
+    entity_update(ts)
+    local text_width = 4 * #ts.text
+    local offset = 0 
+    if (ts.stop_at_right_edge) offset = 128
+    if ts.p.x <= -text_width + offset then
+        ts.v.x = 0
+        ts.p.x = -text_width + offset
+        ts.has_ended = true
     end
 end
 

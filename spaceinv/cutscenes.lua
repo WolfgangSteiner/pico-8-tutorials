@@ -10,36 +10,15 @@ function create_cutscene_1()
     cs.num_shots = 0
     cs.time_between_shots = 1
     cs.start_shots = false
-    cs.msg = create_text_scroller()
+    cs.msg = text_scroller_init(
+        vec2(128, 5),
+        "we are in a terranian soldier ship in the great war between our galaxy and the galaxy of zyxor. this is a patrol, so there are only two people abord.")
+    cs.msg.stop_at_right_edge = false
     cs.entities = { cs.msg, cs.oscar, cs.rick }
     sfx(3,3)
     return cs
 end
 
-function create_text_scroller()
-    local msg = entity_new()
-    msg.p = vec2(64, 5)
-    msg.v = vec2(-1.5*2, 0)
-    msg.has_ended = false
-    msg.text = "we are in a terranian soldier ship in the great war between our galaxy and the galaxy of zyxor. This is a patrol, so there are only two people abord."
-    msg.draw = draw_text_scroller
-    msg.update = update_text_scroller
-    return msg
-end
-
-function update_text_scroller(msg)
-    entity_update(msg)
-    local text_width = 4 * #msg.text
-    if msg.p.x <= -text_width + 128 then
-        msg.v.x = 0
-        msg.p.x = -text_width + 128
-        msg.has_ended = true
-    end
-end
-
-function draw_text_scroller(msg)
-    print(msg.text, msg.p.x, msg.p.y, 2)
-end
 
 function update_cutscene_1(cs)
     local dt = time() - cs.start_time
@@ -56,6 +35,7 @@ function update_cutscene_1(cs)
         cs.num_shots += 1
     end
 end
+
 
 function draw_cutscene_1(cs)
     map(5,0,0,0,32,32)

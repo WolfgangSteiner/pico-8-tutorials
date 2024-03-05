@@ -2,6 +2,7 @@ function _init()
   intro = create_cutscene_1()
   counter = 0;
   player = create_player()
+  player.animation_delay = 0.125
   level = scene_new()
   scene_add_entity(level, create_starfield())
   scene_add_entity(level, player)
