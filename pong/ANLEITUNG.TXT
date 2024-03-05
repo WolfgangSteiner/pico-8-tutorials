@@ -1,0 +1,2 @@
+WIN + 1:   CODE & PICO8
+WIN + 0:   CHROME

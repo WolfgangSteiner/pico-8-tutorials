@@ -15,12 +15,9 @@ function _update()
             if e.update then
                 e.update(e)
             end
-
         end
     end
     boss_appearance()
-    
-    
 end
 
 

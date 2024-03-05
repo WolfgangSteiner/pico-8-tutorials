@@ -1,7 +1,7 @@
 function create_boss()
     local boss = {}
     boss.p = vec2(64,64)
-    boss.lifes = 2
+    boss.lifes = 3
     boss.draw = draw_boss
     boss.update = update_boss
     boss.music = true
@@ -29,17 +29,38 @@ function boss_appearance()
     end
 end
 
-function create_bad_ball()
-    local bad ball = {}
-    bad_ball.x = boss.x
-    bad_ball.y = boss.y
+function create_bad_ball(boss)
+    local bad_ball = create_ball()
+    bad_ball.p = vec2(boss.p.x, boss.p.y)
+
+    bad_ball.v.x = -1
+    bad_ball.v.y = paddle.vel - 3
+    bad_ball.d = 3
+    bad_ball.color = rnd(15 + 1) 
+    bad_ball.update = update_bad_ball
+    return bad_ball      
 end
 
-
-function shoot_bad_balls(boss,bad_ball)
-    if state.boss_fight == true then
+function update_bad_ball(bad_ball)
+        bad_ball.color = rnd(15+1)
+        bad_ball.p = vec2(bad_ball.p.x,bad_ball.p.y)
+        bad_ball.p.x = bad_ball.p.x + bad_ball.v.x
+        if btn(2) then 
+            bad_ball.p.y = bad_ball.p.y - bad_ball.v.y
+        elseif btn(3) then
+            bad_ball.p.y = bad_ball.p.y + bad_ball.v.y
     end
 end
+
+
+function random_spawning(b)
+    local random_number = rnd()
+    return random_number <= b
+end
+
+function shoot_bad_balls(boss,bad_ball)
+    end
+--end
 
 function update_boss(boss)
     boss.p.x += rnd(4) - 2
@@ -57,12 +78,15 @@ function update_boss(boss)
         boss.p.y += 1
     end
 
-  -- if vec2_eq(ball.p,boss.p)
-  --  then draw_boss()
-
-    --if ball.p ==
-
+    if random_spawning(0.04) then
+      local bb = create_bad_ball(boss)
+      add(entities, bb)
+    end
 end
+
+--function draw_bad_ball(bad_ball)
+--    rectfill(bad_ball.p.x,bad_ball.p.y,bad_ball.d,bad_ball.d)
+--end
 
 function draw_boss(boss)
     local boss_sprite = boss.sprites[boss.lifes]
