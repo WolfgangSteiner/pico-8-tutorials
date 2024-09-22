@@ -1,21 +1,23 @@
 function _init()
+  title =  create_title_screen()
   intro = create_cutscene_1()
   counter = 0;
   player = create_player()
   player.animation_delay = 0.125
-  level = scene_new()
-  scene_add_entity(level, create_starfield())
-  scene_add_entity(level, player)
-  --sfx(0)
-  current_scene = intro
+  level_1 = create_level_1()
+  start_scene(title)
 end
 
 function _update()
   current_scene.update(current_scene)
+  if current_scene.has_ended then
+    start_scene(level_1)
+  end
 end
 
 function _draw()
-    cls()
+  cls()
+   -- circfill(64,64,32,3)
     current_scene.draw(current_scene)
 end
 

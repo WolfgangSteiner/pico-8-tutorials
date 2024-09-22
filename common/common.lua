@@ -6,11 +6,22 @@ function random(a,b)
 end
 
 
+
+function float(e,amp,factor,offset)
+    e.p.y = amp*sin(time()*factor) + offset
+
+end
+
+
 -------------------------------------------------------------------------------
 -- vec2
 -------------------------------------------------------------------------------
 function vec2(x,y)
-    return {x=x,y=y}
+    if type(x) == "table" then
+        return {x = x.x, y = x.y} 
+    else
+        return {x=x,y=y}
+    end
 end
 
 function vec2_sub(a,b)
@@ -36,6 +47,19 @@ function vec2_random_direction()
     return vec2(x,y)
 end
 
+function vec2_eq(a,b)
+    return a.x == b.x and a.y == b.y 
+end
+ 
+function vec2_abs(a)
+    return sqrt(a.x*a.x + a.y*a.y)
+end
+
+function vec2_dist(a,b)
+   return vec2_abs(vec2_sub(a,b))
+end
+
+
 
 -------------------------------------------------------------------------------
 -- entity
@@ -56,6 +80,16 @@ end
 
 function entity_draw(e)
 end
+
+
+function hitbox(a,b)
+    if a.p == b.p then
+        return true 
+    else
+        return false
+    end
+end
+
 
 
 -------------------------------------------------------------------------------
@@ -108,7 +142,18 @@ function scene_new()
         entities = {},
         update = scene_update,
         draw = scene_draw,
+        music = nil,
+        has_ended = false
     }
+end
+
+function start_scene(scene)
+    current_scene = scene
+    scene.start_time = time()
+    sfx(-1,3)
+    if scene.music != nil then
+        sfx(scene.music,3)
+    end
 end
 
 function scene_add_entity(s, e)
@@ -132,19 +177,24 @@ end
 
 
 -------------------------------------------------------------------------------
--- text scroller
+-- text (scroller)
 -------------------------------------------------------------------------------
-
-function text_scroller_init(pos, text)
+function text_entity_init(pos, text, color)
     local ts = entity_new()
     ts.p = pos
+    ts.text = text
+    ts.color = color
+    ts.draw = function(ts)
+        print(ts.text, ts.p.x, ts.p.y, ts.color)
+    end
+    return ts
+end
+
+function text_scroller_init(pos, text, color)
+    local ts = text_entity_init(pos, text, color)
     ts.v = vec2(-1.5, 0)
     ts.has_ended = false
     ts.stop_at_right_edge = false
-    ts.text = text
-    ts.draw = function(ts)
-        print(ts.text, ts.p.x, ts.p.y, 2)
-    end
     ts.update = text_scroller_update
     return ts
 end
@@ -160,4 +210,42 @@ function text_scroller_update(ts)
         ts.has_ended = true
     end
 end
+
+
+--function new_text
+
+-------------------------------------------------------------------------------
+--text
+-------------------------------------------------------------------------------
+
+function text_size(s)
+    local arr = split(s,"\n")
+    local w = 0
+    local h = #arr*6 - 1
+    for l in all(arr) do
+       w = max(#l*4 - 1,w)  
+    end
+    return vec2(w,h)
+
+end
+
+function print_centered(s,x,y,c)
+local size = text_size(s)
+    print(s,x - size.x/2,y,c)
+end
+
+function speech_bubble(s,x,y,c)
+    local size = text_size(s)
+    local x0 = x - size.x/2 - 1
+    local y0 = y - size.y - 2 - 2
+    local x1 = x + size.x/2 + 1
+    local y1 = y - 2
+    rectfill(x0,y0 + 1,x1,y1 -1,7)
+    rectfill(x0 + 1,y0,x1 -1,y1,7)
+    line(x,y,x,y1,7)
+    line(x,y,x + 1,y1,7)
+
+    print_centered(s,x,y - size.y - 2,c)
+end
+
 
