@@ -54,11 +54,15 @@ function update_player(player)
             sfx(0)
         end
 
+        --check for dungeon entrance
         if vec2_eq(player.m_p,vec2(15,10)) then 
             player.m_p = vec2(101,62)
+            sfx(1,0)
         end
+        --check for dungeon exit
          if vec2_eq(player.m_p,vec2(101,63)) then 
             player.m_p = vec2(15,11)
+            sfx(-1,0)
         end
     end
 end
