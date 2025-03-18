@@ -3,13 +3,13 @@ function random_map_direction()
     return rnd(directions)
 end
 
-function is_entity_at(pos)
+function get_entity_at(pos)
     for e in all(entities) do 
         if vec2_eq(pos,e.m_p) then 
-            return true 
+            return e
         end 
     end 
-    return false
+    return nil
 end
 
 function is_walkable_at(pos)
@@ -19,4 +19,26 @@ end
 
 function is_player_at(pos)
     return vec2_eq(pos,player.m_p)
+end
+
+function perform_melee_attack(a,b)
+        a.attacks(a)
+    local dice_roll = roll_dice(10)
+    if dice_roll + a.attack_value > b.a_c then 
+        local dmg = a.attack_value
+        if dice_roll >= 9 then
+            dmg *= 2
+        end
+        b.hp -= dmg
+        if b.hp > 0 then
+            b.gets_hit(b)
+        else 
+            b.die(b)
+        end
+    end
+end
+
+function is_player_near(pos,d)
+    local dis = vec2_dist(pos,player.m_p)
+    return dis <= d 
 end

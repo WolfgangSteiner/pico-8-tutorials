@@ -12,6 +12,9 @@ function float(e,amp,factor,offset)
 
 end
 
+function roll_dice(a)
+    return flr(rnd(a)) + 1
+end
 
 -------------------------------------------------------------------------------
 -- vec2
