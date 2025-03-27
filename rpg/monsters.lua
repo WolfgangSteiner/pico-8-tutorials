@@ -3,6 +3,8 @@ function create_monster(x,y,frames,type)
     monster.m_p = vec2(x,y) 
     monster.sprite = sprite_new(vec2(0,0),frames)
     monster.type = type
+    monster.attackable = true
+    monster.is_obstacle = true
     monster.draw = draw_monster
     monster.update = update_monster
     monster.move = monster_make_move
@@ -75,6 +77,7 @@ end
 function create_heart(pos)
     local heart = {}
     heart.sprite = sprite_new(vec2(0,0), {51})
+    heart.attackable = false
     heart.m_p = pos
     heart.update = update_heart
     heart.draw = draw_heart

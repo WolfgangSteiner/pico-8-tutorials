@@ -12,9 +12,28 @@ function get_entity_at(pos)
     return nil
 end
 
+function is_monster_at(pos)
+    for e in all(entities) do
+        if vec2_eq(pos,e.m_p) and e.attackable == true then
+            return e
+        end
+    end 
+end
+
 function is_walkable_at(pos)
-    local sprite_number = mget(pos.x,pos.y) 
-    return fget(sprite_number,0)
+    local sprite_number = mget(pos.x,pos.y)
+
+    if fget(sprite_number,0) == false then 
+        return false 
+    end
+
+    for e in all(entities) do 
+        if vec2_eq(pos,e.m_p) and e.is_obstacle then 
+            return false
+        end
+    end
+
+    return true
 end
 
 function is_player_at(pos)

@@ -6,11 +6,9 @@ function _init()
     tick_duration = 3
     player_has_moved = false
     entities = {}
-    add(entities,create_npc(15,39,{33,34},"please help us,\nthere are strange voices\ncoming out of the cave\nnorth of our village!"))
-    add(entities,create_npc(14,48,{27,28},"welcome to oakville!"))
-    add(entities,create_npc(5,44,{31,32},"walk into a monster\nto attack it"))
-    add(entities,create_npc(9,39,{52,53},"you can pass a turn\n by pressing\151"))
-    add(entities,create_slime(12,59))
+    spawn_all_slimes()
+    spawn_all_npcs()
+    spawn_all_shooters()
    --music = sfx (4)
 end
 
@@ -62,4 +60,9 @@ function _draw()
     player.draw(player)
     rectfill(110, 0, 128, 6, 0)
     print("\135"..tostr(player.hp), 111, 1, 7 )
+    if player.alive == false then 
+        rectfill(49,57,80,65,0)
+        print("you die ",53,59,1)
+        
+    end
 end

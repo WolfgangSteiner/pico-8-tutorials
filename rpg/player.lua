@@ -4,9 +4,9 @@ function create_player()
    player.spr = 1
    player.v = vec2(1,1)
    player.m_p = vec2(5,63) 
+   player.alive = true
+   player.die = player_die
    player.update = update_player
-   --player.walking_counter = 0 
-  -- player.walking_cooldown = 1
    player.attack_counter = 0
    player.attack_cooldown = 3 
    player.attack_value = 4
@@ -28,6 +28,20 @@ function update_player(player)
      --   player.walking_counter += 0.1
         --return
        --else player.walking_counter = 0
+    if  player.hp < 0 then
+        player.hp = 0
+     end
+
+    if player.hp <= 0 and player.alive then
+        player_die(player)
+        sfx(11)
+    elseif player.alive == false then 
+        player.sprite.cells = {58}
+    end
+
+    if player.alive == false then 
+        return 
+    end
     
     local time_since_last_move = time() - player.last_move_time
     if time_since_last_move < player.move_cooldown then 
@@ -46,7 +60,7 @@ function update_player(player)
         player_has_moved = true
         player.last_move_time = time()
         local e = get_entity_at(new_m_p)
-        if e != nil and e.type != "npc" and e.type != "heart" then
+        if e != nil and is_monster_at(new_m_p) then
              perform_melee_attack(player,e)
              player_attacks(player)
         elseif is_walkable_at(new_m_p) then
@@ -56,7 +70,7 @@ function update_player(player)
 
         --check for dungeon entrance
         if vec2_eq(player.m_p,vec2(15,10)) then 
-            player.m_p = vec2(101,62)
+            player.m_p = vec2(87,63)
             sfx(1,0)
         end
         --check for dungeon exit
@@ -103,6 +117,7 @@ end
 
 function draw_player(player)
     player.sprite.draw(player.sprite)
+
     if player.was_hit > 0 then 
         spr(44,player.sprite.p.x,player.sprite.p.y)
         player.was_hit -= 1
@@ -113,4 +128,9 @@ function draw_player(player)
     else
         player.sprite.cells = {0,1}
     end
+end
+
+function player_die(player)
+    player.alive = false
+    player.sprite.cells = {58}
 end

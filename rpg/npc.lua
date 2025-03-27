@@ -4,6 +4,8 @@ function create_npc(x,y,frames,message)
  npc.sprite = sprite_new(vec2(0,0),frames)
  npc.message = message
  npc.type = "npc"
+ npc.attackable = false
+ npc.is_obstacle = true
  npc.show_message = false
  npc.draw = draw_npc
  npc.update = update_npc
