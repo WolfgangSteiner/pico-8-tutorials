@@ -14,6 +14,10 @@ function spawn_all_npcs()
     add(entities,create_npc(17,12,{54},"warning!\ndanger ahead!"))
 end
 
+function spawn_all_swirls()
+    add(entities,create_swirl(67,31,{59,60},87,49))
+end
+
 function spawn_all_shooters()
   --  local positions_up = {{71,51}}
    -- local positions_down = {{11,53},{74,46},{71,46},{66,40},{71,30}}

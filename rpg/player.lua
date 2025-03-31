@@ -3,7 +3,7 @@ function create_player()
    player.sprite = sprite_new(vec2(0,0), {0,1})
    player.spr = 1
    player.v = vec2(1,1)
-   player.m_p = vec2(5,63) 
+   player.m_p =  vec2(87,50)--vec2(5,63)
    player.alive = true
    player.die = player_die
    player.update = update_player
@@ -70,11 +70,11 @@ function update_player(player)
 
         --check for dungeon entrance
         if vec2_eq(player.m_p,vec2(15,10)) then 
-            player.m_p = vec2(87,63)
+            player.m_p = vec2(87,62)
             sfx(1,0)
         end
         --check for dungeon exit
-         if vec2_eq(player.m_p,vec2(101,63)) then 
+         if vec2_eq(player.m_p,vec2(87,63)) then 
             player.m_p = vec2(15,11)
             sfx(-1,0)
         end

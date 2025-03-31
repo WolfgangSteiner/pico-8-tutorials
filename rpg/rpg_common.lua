@@ -61,3 +61,8 @@ function is_player_near(pos,d)
     local dis = vec2_dist(pos,player.m_p)
     return dis <= d 
 end
+
+function is_in_camera(e)
+    local dis = vec2_dist(camera.m_p,e.m_p)
+    return dis <= 9
+end

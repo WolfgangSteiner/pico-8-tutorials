@@ -18,6 +18,10 @@ function update_shooter(shooter)
         return
     end
 
+    if is_in_camera(shooter) == false then 
+        return 
+    end
+
     local bullet = create_bullet(shooter.m_p,shooter) 
     add(entities,bullet)
     shooter.last_shooting_time = time()
@@ -71,4 +75,37 @@ end
 
 function draw_bullet(bullet)
     bullet.sprite.draw(bullet.sprite)
+end
+
+function create_swirl(x,y,frames,tp_x,tp_y)
+    local swirl = {}
+    swirl.m_p = vec2(x,y)
+    swirl.tp_mp = vec2(tp_x,tp_y)
+    swirl.sprite = sprite_new(vec2(0,0),frames)
+    swirl.attackable = false 
+    swirl.is_obstacle = false
+    swirl.update = update_swirl
+    swirl.draw = draw_swirl
+    return swirl
+end
+
+function update_swirl(swirl)
+    if is_in_camera(swirl) == false then 
+        return 
+    end
+
+    if vec2_eq(player.m_p,swirl.m_p) then 
+        player.m_p = swirl.tp_mp
+        sfx(12)
+    end
+end
+
+function draw_swirl(swirl)
+    swirl.sprite.draw(swirl.sprite)
+end
+
+function create_key(x,y,frames,type)
+    local key = {}
+    key.m_p = vec2(x,y)
+    key.sprite = sprite_new(vec2(0,0),frames)
 end

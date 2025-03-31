@@ -9,6 +9,7 @@ function _init()
     spawn_all_slimes()
     spawn_all_npcs()
     spawn_all_shooters()
+    spawn_all_swirls()
    --music = sfx (4)
 end
 
@@ -21,9 +22,9 @@ function _update()
         last_timestamp = time()
         player_has_moved = false
         for e in all(entities) do
-            if e.move != nil then
+            if e.move != nil and is_in_camera(e) then
                 e.move(e)
-            end
+            end    
         end
     end
     for e in all(entities) do 

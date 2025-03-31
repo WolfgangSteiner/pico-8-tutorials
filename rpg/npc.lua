@@ -15,6 +15,11 @@ end
 
 function update_npc(npc)
     local d = vec2_dist(npc.m_p,player.m_p)
+
+    if is_in_camera(npc) == false then
+        return 
+    end
+
     if npc.show_message == false and d < 2 then
         sfx(3)
     end
