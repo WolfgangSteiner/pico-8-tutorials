@@ -13,13 +13,14 @@ function create_shooter(x,y,dir,frames)
 end
 
 function update_shooter(shooter)
-    local time_since_last_shot = time() - shooter.last_shooting_time
-    if time_since_last_shot < shooter.cooldown then
-        return
-    end
 
     if is_in_camera(shooter) == false then 
         return 
+    end
+    
+    local time_since_last_shot = time() - shooter.last_shooting_time
+    if time_since_last_shot < shooter.cooldown then
+        return
     end
 
     local bullet = create_bullet(shooter.m_p,shooter) 
@@ -108,4 +109,20 @@ function create_key(x,y,frames,type)
     local key = {}
     key.m_p = vec2(x,y)
     key.sprite = sprite_new(vec2(0,0),frames)
+    key.type = type
+    key.update = update_key
+    key.draw = draw_key
+    return key
+end
+
+function update_key(key)
+    if vec2_eq(player.m_p,key.m_p) and key.type == "iron" then
+        player.has_iron_key = true
+        del(entities,key)
+        sfx(13)
+    end
+end
+
+function draw_key(key)
+    key.sprite.draw(key.sprite)
 end

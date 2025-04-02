@@ -66,3 +66,10 @@ function is_in_camera(e)
     local dis = vec2_dist(camera.m_p,e.m_p)
     return dis <= 9
 end
+
+function is_in_area(positions,e)
+    for p in all(positions) do
+       if vec2_eq(p,e.m_p) then 
+        return true 
+        
+    end

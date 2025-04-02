@@ -20,6 +20,7 @@ function create_player()
    player.draw = draw_player
    player.last_move_time = 0
    player.move_cooldown = 0.5
+   player.has_iron_key = false
    return player
 end
 
@@ -78,6 +79,29 @@ function update_player(player)
             player.m_p = vec2(15,11)
             sfx(-1,0)
         end
+        --doors and events 
+        if vec2_eq(player.m_p,vec2(87,44)) and player.has_iron_key == true then
+            player.has_iron_key = false
+            mset(87,43,8)
+            sfx(14)
+        end
+
+        if vec2_eq(player.m_p,vec2(97,48)) then 
+            local positions = {{100,46},{105,50},{101,51},{103,48},{105,46},{102,44},{107,49},{99,51},{105,51}}
+            local slime_fight = true
+            mset(96,48,63)
+            sfx(-1,0)
+            sfx(14)
+            for p in all(positions) do
+                add(entities,create_slime(p[1],p[2]))
+            end
+            sfx(15)
+            return slime_fight
+        end
+
+        if slime_fight == true then 
+            local positions = 
+            for 
     end
 end
 

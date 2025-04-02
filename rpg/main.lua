@@ -10,6 +10,7 @@ function _init()
     spawn_all_npcs()
     spawn_all_shooters()
     spawn_all_swirls()
+    spawn_all_keys()
    --music = sfx (4)
 end
 
@@ -59,8 +60,13 @@ function _draw()
         e.draw(e)
     end
     player.draw(player)
-    rectfill(110, 0, 128, 6, 0)
+    rectfill(90, 0, 128, 8, 0)
     print("\135"..tostr(player.hp), 111, 1, 7 )
+
+    if player.has_iron_key == true then 
+        spr(61,105,1)
+    end
+
     if player.alive == false then 
         rectfill(49,57,80,65,0)
         print("you die ",53,59,1)

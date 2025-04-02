@@ -1,5 +1,5 @@
 function spawn_all_slimes()
-    local positions = {{12,59}}
+    local positions = {{12,59},{73,49},{67,44}}
 
     for p in all(positions) do
         add(entities,create_slime(p[1],p[2]))
@@ -28,7 +28,14 @@ function spawn_all_shooters()
     add(entities,create_shooter(74,46,"down",{55,56}))
     add(entities,create_shooter(71,46,"down",{55,56}))
     add(entities,create_shooter(66,40,"down",{55,56}))
+    add(entities,create_shooter(67,40,"down",{55,56}))
+    add(entities,create_shooter(68,40,"down",{55,56}))
+    add(entities,create_shooter(64,43,"right",{55,56}))
+    add(entities,create_shooter(64,44,"right",{55,56}))
     add(entities,create_shooter(71,30,"down",{55,56}))
     add(entities,create_shooter(71,51,"up",{55,56}))
 end
 
+function spawn_all_keys()
+    add(entities,create_key(68,32,{61},"iron"))
+end
