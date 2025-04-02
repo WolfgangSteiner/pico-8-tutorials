@@ -17,7 +17,7 @@ function update_shooter(shooter)
     if is_in_camera(shooter) == false then 
         return 
     end
-    
+
     local time_since_last_shot = time() - shooter.last_shooting_time
     if time_since_last_shot < shooter.cooldown then
         return
@@ -118,6 +118,12 @@ end
 function update_key(key)
     if vec2_eq(player.m_p,key.m_p) and key.type == "iron" then
         player.has_iron_key = true
+        del(entities,key)
+        sfx(13)
+    end
+
+    if vec2_eq(player.m_p,key.m_p) and key.type == "stone" then
+        player.has_stone_key = true
         del(entities,key)
         sfx(13)
     end

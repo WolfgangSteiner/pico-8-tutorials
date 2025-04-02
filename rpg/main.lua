@@ -5,6 +5,7 @@ function _init()
     last_timestamp = time()
     tick_duration = 3
     player_has_moved = false
+    slimes_defeated = false
     entities = {}
     spawn_all_slimes()
     spawn_all_npcs()
@@ -65,6 +66,10 @@ function _draw()
 
     if player.has_iron_key == true then 
         spr(61,105,1)
+    end
+
+    if player.has_stone_key == true then 
+        spr(64,100,1)
     end
 
     if player.alive == false then 

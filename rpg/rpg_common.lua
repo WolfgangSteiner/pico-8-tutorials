@@ -67,9 +67,12 @@ function is_in_camera(e)
     return dis <= 9
 end
 
-function is_in_area(positions,e)
-    for p in all(positions) do
-       if vec2_eq(p,e.m_p) then 
-        return true 
-        
+function is_in_area(x0,y0,x1,y1,type,number)
+    local count = 0
+    for e in all(entities) do
+       if e.m_p.x >= x0 and e.m_p.x <= x1 and e.m_p.y >= y0 and e.m_p.y <= y1 and e.type == type then 
+        return true
+        end
     end
+    return false
+end
