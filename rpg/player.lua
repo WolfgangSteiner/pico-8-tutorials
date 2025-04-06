@@ -3,7 +3,7 @@ function create_player()
    player.sprite = sprite_new(vec2(0,0), {0,1})
    player.spr = 1
    player.v = vec2(1,1)
-   player.m_p =  vec2(87,50)--vec2(5,63)
+   player.m_p =   vec2(87,50) --ec2(5,63)
    player.alive = true
    player.die = player_die
    player.update = update_player
@@ -21,7 +21,7 @@ function create_player()
    player.last_move_time = 0
    player.move_cooldown = 0.5
    player.has_iron_key = false
-   player.has_stone_key = true
+   player.has_stone_key = false
    return player
 end
 
@@ -73,6 +73,7 @@ function update_player(player)
         --check for dungeon entrance
         if vec2_eq(player.m_p,vec2(15,10)) then 
             player.m_p = vec2(87,62)
+            sfx(-1,0)
             sfx(1,0)
         end
         --check for dungeon exit
@@ -85,6 +86,13 @@ function update_player(player)
             player.has_iron_key = false
             mset(87,43,8)
             sfx(14)
+        end
+
+        if vec2_eq(player.m_p,vec2(87,42)) and player.has_stone_key == true then
+            player.has_stone_key = false
+            mset(87,41,8)
+            sfx(14)
+            sfx(18)
         end
 
         if vec2_eq(player.m_p,vec2(97,48)) and not slimes_defeated then 

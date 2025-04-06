@@ -12,6 +12,7 @@ function _init()
     spawn_all_shooters()
     spawn_all_swirls()
     spawn_all_keys()
+    sfx(16,0)
    --music = sfx (4)
 end
 

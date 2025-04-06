@@ -37,5 +37,5 @@ function spawn_all_shooters()
 end
 
 function spawn_all_keys()
-    add(entities,create_key(68,32,{61},"iron"))
+    add(entities,create_key(68,32,{61,66},"iron"))
 end
