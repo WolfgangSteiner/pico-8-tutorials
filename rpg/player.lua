@@ -3,7 +3,7 @@ function create_player()
    player.sprite = sprite_new(vec2(0,0), {0,1})
    player.spr = 1
    player.v = vec2(1,1)
-   player.m_p =   vec2(87,50) --ec2(5,63)
+   player.m_p =    vec2(87,50) --vec2(5,63)
    player.alive = true
    player.die = player_die
    player.update = update_player
@@ -20,8 +20,8 @@ function create_player()
    player.draw = draw_player
    player.last_move_time = 0
    player.move_cooldown = 0.5
-   player.has_iron_key = false
-   player.has_stone_key = false
+   player.has_iron_key = true
+   player.has_stone_key = true
    return player
 end
 
@@ -119,6 +119,17 @@ function update_player(player)
                 slimes_defeated = true
                 add(entities,create_key(102,48,{64,65},"stone"))
             end
+        end
+
+        if vec2_eq(player.m_p,vec2(87,40)) and not cultist_defeated and not cultist_fight then
+            cultist_fight = true
+            draw_cultist_bar = true
+            sfx(-1,0)
+            sfx(19,0)
+            sfx(20,1)
+            sfx(21)
+            add(entities,create_cultist(87,37))
+            mset(87,41,6)
         end
     end
 end

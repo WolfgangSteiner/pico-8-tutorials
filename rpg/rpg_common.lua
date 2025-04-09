@@ -76,3 +76,4 @@ function is_in_area(x0,y0,x1,y1,type,number)
     end
     return false
 end
+

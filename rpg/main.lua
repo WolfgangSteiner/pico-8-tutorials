@@ -6,13 +6,16 @@ function _init()
     tick_duration = 3
     player_has_moved = false
     slimes_defeated = false
+    cultist_defeated = false
+    cultist_hp = 50
+    draw_cultist_bar = false
     entities = {}
     spawn_all_slimes()
     spawn_all_npcs()
     spawn_all_shooters()
     spawn_all_swirls()
     spawn_all_keys()
-    sfx(16,0)
+    --sfx(16,0)
    --music = sfx (4)
 end
 
@@ -33,6 +36,7 @@ function _update()
     for e in all(entities) do 
         -- transform sprites from map to screen
         transform_sprite_position(e) 
+
         -- perform sprite animations
         e.sprite.update(e.sprite)
         e.update(e)
@@ -76,6 +80,12 @@ function _draw()
     if player.alive == false then 
         rectfill(49,57,80,65,0)
         print("you die ",53,59,1)
-        
     end
+
+    if draw_cultist_bar == true then 
+        rectfill(0,120,127,127,2)
+        rectfill(0,120,cultist_hp*2.54,127,8)
+        print("cultist",50,121,7)
+    end
+
 end

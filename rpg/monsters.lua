@@ -21,6 +21,8 @@ function create_slime(x,y)
     slime.a_c = 2
     slime.attack_value = 3
     slime.hp = 8
+    slime.does_attack = true
+    slime.does_walk = true
     return slime
 end
 
@@ -43,10 +45,10 @@ function monster_make_move(e)
     local new_pos = vec2_add(e.m_p,dir)
    -- if local dis < 2 then 
     --lseif
-    if is_player_near(e.m_p,1) then
+    if is_player_near(e.m_p,1) and e.does_attack == true then
         perform_melee_attack(e,player)
         sfx(7)
-    elseif is_walkable_at(new_pos) and not get_entity_at(new_pos) then
+    elseif is_walkable_at(new_pos) and not get_entity_at(new_pos) and e.does_walk == true then
         e.m_p = new_pos
     end
 end
@@ -54,7 +56,11 @@ end
 
 
 function update_monster(e)
-   
+    for e in all(entities) do 
+        if e.type == "cultist" then 
+            cultist_hp = e.hp
+        end
+    end
 end 
 
 function monster_die(e)
@@ -95,4 +101,33 @@ end
 
 function draw_heart(heart)
     heart.sprite.draw(heart.sprite)
+end
+
+function create_cultist(x,y)
+    local cultist = create_monster(x,y,{70,71},"cultist")
+    cultist.sprite = sprite_new(vec2(0,0),{70,71})
+    cultist.a_c = 0
+    cultist.attack_value = 0
+    cultist.hp = 50
+    cultist.max_hp = 50
+    cultist.does_attack = false
+    cultist.does_move = false
+    cultist.move = cultist_make_move
+    return cultist 
+end
+
+function update_cultist(cultist)
+    
+end
+
+function draw_cultist(cultist)
+    cultist.sprite.draw(cultist.sprite)
+    
+
+end
+
+function cultist_make_move(cultist)
+end
+
+function cultist_attacks(cultist)
 end
