@@ -15,6 +15,7 @@ function _init()
     spawn_all_shooters()
     spawn_all_swirls()
     spawn_all_keys()
+    add(entities,create_corrupted_ball(87,40))
     --sfx(16,0)
    --music = sfx (4)
 end

@@ -22,7 +22,7 @@ function create_slime(x,y)
     slime.attack_value = 3
     slime.hp = 8
     slime.does_attack = true
-    slime.does_walk = true
+    slime.does_move = true
     return slime
 end
 
@@ -48,7 +48,7 @@ function monster_make_move(e)
     if is_player_near(e.m_p,1) and e.does_attack == true then
         perform_melee_attack(e,player)
         sfx(7)
-    elseif is_walkable_at(new_pos) and not get_entity_at(new_pos) and e.does_walk == true then
+    elseif is_walkable_at(new_pos) and not get_entity_at(new_pos) and e.does_move == true then
         e.m_p = new_pos
     end
 end
@@ -113,11 +113,19 @@ function create_cultist(x,y)
     cultist.does_attack = false
     cultist.does_move = false
     cultist.move = cultist_make_move
+    cultist.vulnerable = false
+    cultist.update = update_cultist
     return cultist 
 end
 
 function update_cultist(cultist)
-    
+    if cultist.vulnerable == false then 
+        local positions = {{86,33},{87,33},{88,33},{86,34},{88,34},{86,35},{87,35},{88,35}}
+        for p in all(positions) do 
+            mset(p[1],p[2],74)
+        end
+        sfx(21)
+    end
 end
 
 function draw_cultist(cultist)
@@ -130,4 +138,21 @@ function cultist_make_move(cultist)
 end
 
 function cultist_attacks(cultist)
+end
+
+function create_corrupted_ball(x,y)
+    local corrupted_ball = create_monster(x,y,{72,73},"corrupted_ball")
+    corrupted_ball.sprite = sprite_new(vec2(0,0),{72,73})
+    corrupted_ball.a_c = 5
+    corrupted_ball.attack_value = 3
+    corrupted_ball.hp = 8
+    corrupted_ball.does_move = true
+    return corrupted_ball
+end
+
+function update_corrupted_ball(corrupted_ball)
+end
+
+function draw_corrupted_ball(corrupted_ball)
+    corrupted_ball.sprite.draw(corrupted_ball.sprite)
 end

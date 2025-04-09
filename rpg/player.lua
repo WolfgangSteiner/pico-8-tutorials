@@ -127,8 +127,8 @@ function update_player(player)
             sfx(-1,0)
             sfx(19,0)
             sfx(20,1)
-            sfx(21)
-            add(entities,create_cultist(87,37))
+            --sfx(22)
+            add(entities,create_cultist(87,34))
             mset(87,41,6)
         end
     end
