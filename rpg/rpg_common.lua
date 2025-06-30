@@ -77,3 +77,17 @@ function is_in_area(x0,y0,x1,y1,type,number)
     return false
 end
 
+--function random_area_position(a,b)
+    --local dis_1 = a.x - 1 
+    --local dis_2 = a.y - 1
+  --  return vec2(rnd((b.x - a.x)+2)+ dis_1,rnd((b.y - a.y)+2)+ dis_2)
+--end
+
+function is_entity_there(type)
+    for e in all(entities) do 
+        if e.type == type then
+            return true 
+        end
+    end
+    return false 
+end

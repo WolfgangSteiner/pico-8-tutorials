@@ -113,25 +113,52 @@ function create_cultist(x,y)
     cultist.does_attack = false
     cultist.does_move = false
     cultist.move = cultist_make_move
-    cultist.vulnerable = false
+    cultist.protected = true
+    cultist.set_protected = false
     cultist.update = update_cultist
+    cultist.hp_count = 0
+    cultist.count = 1
     return cultist 
 end
 
 function update_cultist(cultist)
-    if cultist.vulnerable == false then 
-        local positions = {{86,33},{87,33},{88,33},{86,34},{88,34},{86,35},{87,35},{88,35}}
+    if cultist.protected == false then 
+        cultist.hp_count = cultist.max_hp - cultist.hp
+    end
+
+    if cultist.hp_count >= 17*cultist.count then 
+        cultist.hp_count = 0 
+        cultist.count += 1
+        cultist.protected = true
+    end
+
+    if is_entity_there("corrupted_ball") == false and cultist.protected == true and cultist.set_protected == true then 
+        cultist.protected = false 
+        cultist.set_protected = false
+        local positions = {{86,33},{87,33},{88,33},{86,34},{88,34},{86,35,},{87,35},{88,35}}
+
+        for p in all(positions) do 
+            mset(p[1],p[2],8)
+        end
+    end
+
+    if cultist.protected == true and cultist.set_protected == false then 
+        local positions = {{86,33},{87,33},{88,33},{86,34},{88,34},{86,35,},{87,35},{88,35}}
+        local positions2 = {{80,33,},{87,37},{88,31},{91,32}}
         for p in all(positions) do 
             mset(p[1],p[2],74)
         end
-        sfx(21)
+
+        for p in all(positions2) do 
+           add(entities,create_corrupted_ball(p[1],p[2]))
+        end
+
+        cultist.set_protected = true
     end
 end
 
 function draw_cultist(cultist)
     cultist.sprite.draw(cultist.sprite)
-    
-
 end
 
 function cultist_make_move(cultist)
@@ -147,6 +174,8 @@ function create_corrupted_ball(x,y)
     corrupted_ball.attack_value = 3
     corrupted_ball.hp = 8
     corrupted_ball.does_move = true
+    corrupted_ball.is_obstacle = true
+    corrupted_ball.does_attack = true
     return corrupted_ball
 end
 
