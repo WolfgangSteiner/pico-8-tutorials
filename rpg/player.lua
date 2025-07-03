@@ -125,11 +125,17 @@ function update_player(player)
             cultist_fight = true
             draw_cultist_bar = true
             sfx(-1,0)
-            sfx(19,0)
-            sfx(20,1)
+            sfx(5,0)
             --sfx(22)
             add(entities,create_cultist(87,34))
             mset(87,41,6)
+        end
+
+        if is_entity_there("cultist") == false and cultist_fight then 
+            cultist_defeated = true 
+            draw_cultist_bar = false
+            sfx(-1,0)
+            sfx(24)
         end
     end
 end

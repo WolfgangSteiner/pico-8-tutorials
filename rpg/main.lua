@@ -1,4 +1,36 @@
 function _init()
+    title = create_title_screen()
+    game = create_game()
+    start_scene(title)
+    --start_scene(game)
+    
+    --sfx(16,0)
+   --music = sfx (4)
+end
+
+function _update()
+    current_scene.update(current_scene)
+end
+
+function update_camera()
+    camera.m_p.x = mid(player.m_p.x,camera.size.x/2,127 - camera.size.x/2) --- camera.size.x/2
+    camera.m_p.y = mid(player.m_p.y,camera.size.y/2,64 - camera.size.y/2) --- camera.size.y/2
+end
+
+function transform_sprite_position(e)
+    local offset = vec2_mul(camera.size, 0.5)
+    e.sprite.p = vec2_mul(vec2_sub(vec2_add(e.m_p,offset),camera.m_p),8)
+end
+
+
+function _draw()
+    cls()
+    current_scene.draw(current_scene)
+end
+
+function create_game()
+    local game = scene_new()
+    
     camera = {m_p = vec2(0,0), size = vec2(16,16)}
     player = create_player()
     tick = 0
@@ -10,16 +42,12 @@ function _init()
     cultist_hp = 50
     draw_cultist_bar = false
     entities = {}
-    spawn_all_slimes()
-    spawn_all_npcs()
-    spawn_all_shooters()
-    spawn_all_swirls()
-    spawn_all_keys()
-    --sfx(16,0)
-   --music = sfx (4)
+    game.draw = draw_game
+    game.update = update_game
+    return game
 end
 
-function _update()
+function update_game()
     update_player(player)
     update_camera()
     current_time = time()
@@ -43,24 +71,10 @@ function _update()
     end
 end
 
-function update_camera()
-    camera.m_p.x = mid(player.m_p.x,camera.size.x/2,127 - camera.size.x/2) --- camera.size.x/2
-    camera.m_p.y = mid(player.m_p.y,camera.size.y/2,64 - camera.size.y/2) --- camera.size.y/2
-end
-
-function transform_sprite_position(e)
-    local offset = vec2_mul(camera.size, 0.5)
-    e.sprite.p = vec2_mul(vec2_sub(vec2_add(e.m_p,offset),camera.m_p),8)
-end
-
-
-
-
-
-function _draw()
+function draw_game()
+    spr(55,55,55)
     transform_sprite_position(player)
     sprite_update(player.sprite)
-    cls()
     map(camera.m_p.x - camera.size.x/2,camera.m_p.y - camera.size.y/2,0,0,camera.size.x,camera.size.y)
     for e in all (entities) do 
         e.draw(e)

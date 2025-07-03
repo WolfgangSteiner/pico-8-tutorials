@@ -130,6 +130,8 @@ function update_cultist(cultist)
         cultist.hp_count = 0 
         cultist.count += 1
         cultist.protected = true
+        player.m_p = vec2(87,39)
+        sfx(21)
     end
 
     if is_entity_there("corrupted_ball") == false and cultist.protected == true and cultist.set_protected == true then 
@@ -140,11 +142,14 @@ function update_cultist(cultist)
         for p in all(positions) do 
             mset(p[1],p[2],8)
         end
+
+        sfx(23)
     end
+
 
     if cultist.protected == true and cultist.set_protected == false then 
         local positions = {{86,33},{87,33},{88,33},{86,34},{88,34},{86,35,},{87,35},{88,35}}
-        local positions2 = {{80,33,},{87,37},{88,31},{91,32}}
+        local positions2 = {{81,33,},{87,37},{88,31},{91,32}}
         for p in all(positions) do 
             mset(p[1],p[2],74)
         end
