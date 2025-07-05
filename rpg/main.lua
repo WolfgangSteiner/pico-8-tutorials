@@ -44,6 +44,8 @@ function create_game()
     entities = {}
     game.draw = draw_game
     game.update = update_game
+    game.music = 16
+
     return game
 end
 

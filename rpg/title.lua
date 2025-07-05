@@ -17,5 +17,6 @@ function update_title(title_screen)
         spawn_all_shooters()
         spawn_all_swirls()
         spawn_all_keys()
+        sfx(25)
     end
 end

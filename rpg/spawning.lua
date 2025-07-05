@@ -24,7 +24,7 @@ function spawn_all_shooters()
     --local positions_left = {}
     --local positions_right = {}
 
-    add(entities,create_shooter(11,53,"down",{55,56}))
+    --add(entities,create_shooter(11,53,"down",{55,56}))
     add(entities,create_shooter(74,46,"down",{55,56}))
     add(entities,create_shooter(71,46,"down",{55,56}))
     add(entities,create_shooter(66,40,"down",{55,56}))
